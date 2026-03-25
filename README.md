@@ -36,7 +36,7 @@ A cybersecurity project that simulates phishing campaigns to analyze user behavi
 
 ## 📊 Dashboard Preview
 
-<img width="974" height="930" alt="1774462293" src="https://github.com/user-attachments/assets/34d8a4bc-d957-49c7-8587-8ad6c214b0dc" />
+<img width="973" height="929" alt="1774463838" src="https://github.com/user-attachments/assets/af5a0dd0-9680-4255-8125-cf6c36ec298d" />
 
 ---
 
@@ -45,16 +45,19 @@ A cybersecurity project that simulates phishing campaigns to analyze user behavi
 ```bash
 git clone https://github.com/bichiouyahya/phishing-simulator.git
 cd phishing-simulator
-pip install -r requirements.txt```
+pip install -r requirements.txt
+```
 
 Create a .env file:
 ```bash
 EMAIL_ADDRESS=your_email@gmail.com
-EMAIL_PASSWORD=your_app_password```
+EMAIL_PASSWORD=your_app_password
+```
 
 Run the Application
 ```bash
-uvicorn main:app --reload```
+uvicorn main:app --reload
+```
 
 Testing Flow
 Generate test data:
