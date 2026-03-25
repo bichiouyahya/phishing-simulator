@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .card p {
+            margin-top: 10px;
+            color: #94a3b8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #334155;
+            text-align: center;
+        }
+
+        th {
+            background: #334155;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #273549;
+        }
+
+        .yes {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .no {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        canvas {
+            margin-top: 50px;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Phishing Campaign Dashboard</h1>
+
+<div class="stats">
+    <div class="card">
+        <h2>{{ total_sent }}</h2>
+        <p>Emails Sent</p>
+    </div>
+    <div class="card">
+        <h2>{{ total_clicked }}</h2>
+        <p>Clicked ({{ click_rate }}%)</p>
+    </div>
+    <div class="card">
+        <h2>{{ total_submitted }}</h2>
+        <p>Submitted ({{ submit_rate }}%)</p>
+    </div>
+</div>
+
+<table>
+    <tr>
+        <th>Email</th>
+	<th>Status</th>
+        <th>Clicked</th>
+        <th>Submitted</th>
+        <th>IP</th>
+        <th>User Agent</th>
+    </tr>
+
+    {% for row in data %}
+    <tr style="background: {% if row.submitted %}#3f1d1d{% endif %}">
+        <td>{{ row.email }}</td>
+	<td>
+	    {% if row.submitted %}
+		Compromised
+	    {% elif row.clicked %}
+		Clicked
+	    {% else %}
+		Safe
+	    {% endif %}
+	</td>
+        <td class="{{ 'yes' if row.clicked else 'no' }}">
+            {{ 'YES' if row.clicked else 'NO' }}
+        </td>
+        <td class="{{ 'yes' if row.submitted else 'no' }}">
+            {{ 'YES' if row.submitted else 'NO' }}
+        </td>
+        <td>{{ row.ip }}</td>
+        <td>{{ row.user_agent[:50] }}...</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<canvas id="statsChart"></canvas>
+
+<script>
+const ctx = document.getElementById('statsChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Sent', 'Clicked', 'Submitted'],
+        datasets: [{
+            label: 'Campaign Stats',
+            data: [{{ total_sent }}, {{ total_clicked }}, {{ total_submitted }}],
+            backgroundColor: [
+                '#38bdf8',  // cyan (bright)
+                '#22c55e',  // green
+                '#f43f5e'   // pink/red
+            ]
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white'
+                },
+                grid: {
+                    color: '#334155'
+                }
+            },
+            y: {
+                ticks: {
+                    color: 'white'
+                },
+                grid: {
+                    color: '#334155'
+                }
+            }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
