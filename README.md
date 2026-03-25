@@ -59,30 +59,47 @@ Run the Application
 uvicorn main:app --reload
 ```
 
-Testing Flow
+---
+
+## 🧪 Testing Flow
+
 Generate test data:
+
 /setup-test
+
 Change reciever email (main.py):
+```bash
 target = Target(
     email="example@test.com",
     name="Test User"
 )
+```
+
 Send phishing email:
+
 /send-test
+
 Click the link from your email
+
 Submit credentials
+
 View results in dashboard:
+
 /dashboard
 
+---
 
-⚠️ Disclaimer
+## ⚠️ Disclaimer
 
 This project is intended for educational purposes only.
 
 Do NOT use this system against real users without explicit consent.
 
-📌 Future Improvements
-Admin authentication system
-GeoIP tracking (victim location)
-Export results (CSV)
-Improved UI/UX
+---
+
+## 📌 Future Improvements
+
+- Admin authentication system
+- GeoIP tracking (victim location)
+- Export results (CSV)
+- Improved UI/UX
