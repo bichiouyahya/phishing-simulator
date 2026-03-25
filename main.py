@@ -51,9 +51,10 @@ def setup_test():
     db = SessionLocal()
 
     target = Target(
-        email="info.bichiou.yahya@gmail.com",
-        name="Yahya Bichiou"
+    	email="example@test.com",
+    	name="Test User"
     )
+
     db.add(target)
     db.commit()
     db.refresh(target)
